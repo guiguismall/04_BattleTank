@@ -4,6 +4,8 @@
 
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
+#include "TankBarrel.h"
+#include "Projectile.h"
 #include "Tank.h"
 
 
@@ -35,8 +37,22 @@ void ATank::AimAt(FVector HitLocation)
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
+void ATank::Fire()
+{
+	auto Time = GetWorld()->GetTimeSeconds();
+
+	if (!Barrel) { return; }
+
+	FVector ProjectileLocation = Barrel->GetSocketLocation(FName("Projectile"));
+	FRotator ProjectileRotation = Barrel->GetSocketRotation(FName("Projectile"));
+
+	// spawn a projectile at the socket location on the barrel
+	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, ProjectileLocation, ProjectileRotation);
+}
+
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
+	Barrel = BarrelToSet;
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
 }
 
