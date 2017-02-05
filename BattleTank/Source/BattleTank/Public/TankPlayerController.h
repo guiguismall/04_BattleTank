@@ -26,10 +26,10 @@ private:
 	bool GetLookVectorHitLocation(FVector&, FVector) const;
 
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 		float CrossHairXLocation = 0.5;			// X coordinate of the crosshair on screen (starting left)
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 		float CrossHairYLocation = 0.333333;	// y coordinate of the crosshair on screen (starting top)
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 		float LineTraceRange = 1000000;			// max distance to check for an object hit (10km)
 };
