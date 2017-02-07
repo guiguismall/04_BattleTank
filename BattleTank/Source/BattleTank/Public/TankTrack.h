@@ -19,6 +19,6 @@ public:
 	void SetThrottle(float Throttle);
 	
 	// Max force per track in newtons
-	UPROPERTY(EditDefaultsOnly)
-		float TrackMaxDrivingForce = 400000;	// assume 40 tons tank, going for 10m/s^2 accel
+	//UPROPERTY(EditDefaultsOnly)
+		float TrackMaxDrivingForce = 20000000.0;	// assume 40 tons tank, going for 10m/s^2 accel
 };

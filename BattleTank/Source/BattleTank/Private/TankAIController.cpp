@@ -21,10 +21,13 @@ void ATankAIController::Tick(float DeltaTime)
 	ATank* PlayerTank = Cast<ATank>(PlayerPawn);
 	ATank* ThisTank = Cast<ATank>(ThisPawn);
 
+	// move to player
+	MoveToActor(PlayerTank, 0);
+
 	// aim at player
 	ThisTank->AimAt(PlayerTank->GetActorLocation());
 
-	// TODO limite firing rate
-	ThisTank->Fire();
+	// fire
+	//ThisTank->Fire();
 }
 
