@@ -6,7 +6,6 @@
 #include "Tank.generated.h"
 
 class UTankAimingComponent;
-class UTankMovementComponent;
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
@@ -19,9 +18,6 @@ class BATTLETANK_API ATank : public APawn
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
-
-	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent* TankMovementComponent = nullptr;
 
 public:
 	// Sets default values for this pawn's properties
@@ -40,6 +36,7 @@ public:
 
 
 private:
+	// TODO remove once refactor is done
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float LaunchSpeed = 4000; //
 

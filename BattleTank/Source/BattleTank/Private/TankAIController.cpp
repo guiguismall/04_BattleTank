@@ -17,7 +17,7 @@ void ATankAIController::Tick(float DeltaTime)
 	// get player tank
 	APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 	APawn* ThisPawn = GetPawn();
-	if (!PlayerPawn || !ThisPawn) { return; }
+	if (!ensure(PlayerPawn && ThisPawn)) { return; }
 	ATank* PlayerTank = Cast<ATank>(PlayerPawn);
 	ATank* ThisTank = Cast<ATank>(ThisPawn);
 
