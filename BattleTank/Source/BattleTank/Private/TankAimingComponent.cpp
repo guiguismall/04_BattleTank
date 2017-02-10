@@ -42,7 +42,7 @@ void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector TargetLocation)
 {
 	if (!ensure(Barrel)) { return; }
 

@@ -36,7 +36,7 @@ public:
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
-	void AimAt(FVector TargetLocation, float LaunchSpeed);
+	void AimAt(FVector TargetLocation);
 
 	void MoveBarrel(FVector AimDirection);
 	
@@ -48,4 +48,7 @@ private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 	float MaxElevationSpeed = 20;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 4000;
 };
