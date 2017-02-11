@@ -29,6 +29,6 @@ void ATankAIController::Tick(float DeltaTime)
 	AimingComponent->AimAt(PlayerPawn->GetActorLocation());
 
 	// fire
-	//ThisPawn->Fire();
+	//AimingComponent->Fire();
 }
 
