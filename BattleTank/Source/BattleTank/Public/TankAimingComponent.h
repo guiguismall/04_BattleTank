@@ -41,25 +41,28 @@ public:
 
 	void MoveBarrel(FVector AimDirection);
 
+	bool IsBarrelMoving();
+
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Fire();
 	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-		EFiringState FiringState = EFiringState::Aiming;
+		EFiringState FiringState = EFiringState::Reloading;
 
 private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 	float MaxElevationSpeed = 20;
+	FVector CurrentAimDirection;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
-	double LastFireTime = 0;
-
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3;
+	double LastFireTime = 0;
 };

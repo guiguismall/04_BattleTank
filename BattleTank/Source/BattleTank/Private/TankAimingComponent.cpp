@@ -30,8 +30,8 @@ void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	// So that tanks have to reload on game start
+	LastFireTime = FPlatformTime::Seconds();
 }
 
 
@@ -39,8 +39,15 @@ void UTankAimingComponent::BeginPlay()
 void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-
-	// ...
+	if ((FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds) {
+		if (IsBarrelMoving())
+			FiringState = EFiringState::Aiming;
+		else
+			FiringState = EFiringState::Locked;
+	}
+	else {
+		FiringState = EFiringState::Reloading;
+	}
 }
 
 void UTankAimingComponent::AimAt(FVector TargetLocation)
@@ -68,6 +75,7 @@ void UTankAimingComponent::AimAt(FVector TargetLocation)
 
 void UTankAimingComponent::MoveBarrel(FVector AimDirection)
 {
+	CurrentAimDirection = AimDirection;
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimRotator - BarrelRotator;
@@ -80,13 +88,18 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection)
 	
 }
 
+bool UTankAimingComponent::IsBarrelMoving()
+{
+	if (!ensure(Barrel)) { return false; }
+	auto CurrentForwardVector = Barrel->GetForwardVector();
+	return !CurrentForwardVector.Equals(CurrentAimDirection);
+}
+
 void UTankAimingComponent::Fire()
 {
-	if (!ensure(Barrel)) { return; }
-	if (!ensure(ProjectileBlueprint)) { return; }
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-
-	if (isReloaded) {
+	if (FiringState != EFiringState::Reloading) {
+		if (!ensure(Barrel)) { return; }
+		if (!ensure(ProjectileBlueprint)) { return; }
 		FVector ProjectileLocation = Barrel->GetSocketLocation(FName("Projectile"));
 		FRotator ProjectileRotation = Barrel->GetSocketRotation(FName("Projectile"));
 
