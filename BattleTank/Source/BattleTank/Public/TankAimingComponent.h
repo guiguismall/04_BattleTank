@@ -72,5 +72,5 @@ private:
 	float ReloadTimeInSeconds = 3;
 	double LastFireTime = 0;
 
-	int AmmoCount = 3;
+	int AmmoCount = 300;
 };
