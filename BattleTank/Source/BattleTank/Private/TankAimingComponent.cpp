@@ -39,7 +39,9 @@ void UTankAimingComponent::BeginPlay()
 void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-	if ((FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds) {
+	if (AmmoCount <= 0)
+		FiringState = EFiringState::Ooa;
+	else if ((FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds) {
 		if (IsBarrelMoving())
 			FiringState = EFiringState::Aiming;
 		else
@@ -49,6 +51,10 @@ void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 		FiringState = EFiringState::Reloading;
 	}
 }
+
+EFiringState UTankAimingComponent::GetFiringState() const { return FiringState; }
+
+int UTankAimingComponent::GetAmmoCount() const { return AmmoCount; }
 
 void UTankAimingComponent::AimAt(FVector TargetLocation)
 {
@@ -84,8 +90,11 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection)
 	Barrel->Elevate(DeltaRotator.Pitch);
 
 	// Rotate Turret
-	Turret->Rotate(DeltaRotator.Yaw);
-	
+	//float Delta = FMath::Abs(DeltaRotator.Yaw);
+	if(DeltaRotator.Yaw < 180)
+		Turret->Rotate(DeltaRotator.Yaw);
+	else
+		Turret->Rotate(-1 * DeltaRotator.Yaw);
 }
 
 bool UTankAimingComponent::IsBarrelMoving()
@@ -97,7 +106,8 @@ bool UTankAimingComponent::IsBarrelMoving()
 
 void UTankAimingComponent::Fire()
 {
-	if (FiringState != EFiringState::Reloading) {
+	if (FiringState == EFiringState::Aiming || FiringState == EFiringState::Locked) {
+		AmmoCount -= 1;
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(ProjectileBlueprint)) { return; }
 		FVector ProjectileLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -109,4 +119,5 @@ void UTankAimingComponent::Fire()
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
+
 

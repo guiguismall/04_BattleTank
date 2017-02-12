@@ -10,11 +10,13 @@ class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 	
+protected:
+	// how close can the AI get to the player
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float AcceptanceRadius = 3000;
+
 private:
 	void BeginPlay() override;
 
 	void Tick(float DeltaTime) override;
-
-	// how close can the AI get to the player
-	float AcceptanceRadius = 3000;
 };

@@ -23,12 +23,15 @@ void ATankAIController::Tick(float DeltaTime)
 	if (!ensure(AimingComponent)) { return; }
 
 	// move to player
-	MoveToActor(PlayerPawn, 0);
+	MoveToActor(PlayerPawn, AcceptanceRadius);
 
 	// aim at player
 	AimingComponent->AimAt(PlayerPawn->GetActorLocation());
 
 	// fire
-	//AimingComponent->Fire();
+	if (AimingComponent->GetFiringState() == EFiringState::Locked)
+	{
+		AimingComponent->Fire();
+	}
 }
 
