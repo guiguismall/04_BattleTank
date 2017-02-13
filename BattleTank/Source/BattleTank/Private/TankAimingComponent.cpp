@@ -54,7 +54,7 @@ void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 
 EFiringState UTankAimingComponent::GetFiringState() const { return FiringState; }
 
-int UTankAimingComponent::GetAmmoCount() const { return AmmoCount; }
+int32 UTankAimingComponent::GetAmmoCount() const { return AmmoCount; }
 
 void UTankAimingComponent::AimAt(FVector TargetLocation)
 {
@@ -91,9 +91,9 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection)
 
 	// Rotate Turret
 	//float Delta = FMath::Abs(DeltaRotator.Yaw);
-	if(FMath::Abs(DeltaRotator.Yaw) < 180)
+	if(DeltaRotator.Yaw < 180)
 		Turret->Rotate(DeltaRotator.Yaw);
-	else // avoid going the long way by going backwards
+	else
 		Turret->Rotate(-1 * DeltaRotator.Yaw);
 }
 
