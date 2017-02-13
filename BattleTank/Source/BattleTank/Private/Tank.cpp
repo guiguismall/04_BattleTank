@@ -9,9 +9,7 @@
 ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
-
-	//TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));	
+	PrimaryActorTick.bCanEverTick = false;	
 }
 
 // Called when the game starts or when spawned
@@ -24,5 +22,11 @@ void ATank::BeginPlay()
 void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
+}
 
+float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)
+{
+	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);	// round to int
+	auto DamageToApply = FMath::Clamp<int32>(DamagePoints, 0, CurrentHealth);
+	return DamageToApply;
 }
