@@ -25,7 +25,7 @@ public:
 	
 	// Max force per track in newtons
 	UPROPERTY(EditDefaultsOnly)
-		float TrackMaxDrivingForce = 40000000.0;	// assume 40 tons tank, going for 10m/s^2 accel
+	float TrackMaxDrivingForce = 40000000.0;	// assume 40 tons tank, going for 10m/s^2 accel
 
 private:
 	void ApplySidewaysForce();

@@ -29,6 +29,12 @@ private:
 	UStaticMeshComponent* CollisionMesh;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UParticleSystemComponent* LaunchBlast;
+		UParticleSystemComponent* ImpactBlast;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* YourMomBlast;
+	
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 	
 };
