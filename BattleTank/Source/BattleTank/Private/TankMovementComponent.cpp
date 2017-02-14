@@ -9,24 +9,25 @@ void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* 
 	if (!ensure(LeftTrackToSet && RightTrackToSet)) { return; }
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
+	
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
+	if (!LeftTrack || !RightTrack) { return; }
 	if (Throw < 0) Throw = -1;
 	if (Throw > 0) Throw = 1;
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
-	// TODO prevent double double input speed
 }
 
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
+	if (!LeftTrack || !RightTrack) { return; }
 	if (Throw < 0) Throw = -1;
 	if (Throw > 0) Throw = 1;
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-1 * Throw);
-	// TODO prevent double double input speed
 }
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
