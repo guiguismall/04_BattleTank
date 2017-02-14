@@ -27,6 +27,10 @@ private:
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
 	bool GetLookVectorHitLocation(FVector&, FVector) const;
 
+	virtual void SetPawn(APawn* InPawn) override;
+	UFUNCTION()
+	void OnPossessedTankDeath();
+
 
 	UPROPERTY(EditDefaultsOnly)
 		float CrossHairXLocation = 0.5;			// X coordinate of the crosshair on screen (starting left)
